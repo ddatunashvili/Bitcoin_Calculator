@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <meta name="twitter:card" content="summary_large_image" /> -->
+    <!-- <meta name="twitter:site" content="@rohunvora" /> -->
+    
+
+    <!-- <meta name="twitter:title" content="bitcoin or stupid shit?" /> -->
+    <!-- <meta name="twitter:description" -->
+        <!-- content="See what your dumbest purchases would be worth if you bought Bitcoin instead." /> -->
+        <meta property="og:image" content="https://bitnet.kerley.ge/btcimage/Question-Mark-Final.png">
+        <meta property="og:title" content="bitcoin or stupid shit?" />
+        <meta property="og:description" content="Buy bitcoin instead of fuckin stupid shit" />
+        <meta property="og:url" content="https://bitnet.kerley.ge" />
+
+    <meta name="twitter:image" content="https://i.imgur.com/xkax4Mp.png" />
+
+    <link rel="stylesheet" href="minified.css">
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="icon" type="image/png" href="https://bitnet.kerley.ge/btcimage/Question-Mark-Final.png" />
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+    <title>რას შეიძენდი?</title>
+    <script defer src='script.js'></script>
+</head>
+
+<body>
+
+
+<div id="all">
+    <div>
+        <button class="batoni" onclick="captureAndShare(1);"><img src="src/facebook.png" alt="">გაზიარება</button>
+    <button class="batoni" onclick="captureAndShare(2);"><img src="src/messenger.png" alt="">გაზიარება</button>
+    </div>
+    
+    <div class="textBody">
+        <h1 id="stupid">ათასი,</h1>
+        <h1 id="fuckin">სისულელის ნაცვლად</h1>
+        <h1 id="bitcoinTwo">
+            <span id="bitcoin">ბითქოინი</span>
+        </h1>
+        <h1 id="bought">რომ გეყიდა</h1>
+   
+        
+        <h1 id="you"> <span id="have">გექნებოდა</span> <span id="more">ბევრი</span></h1>
+        <h1 id="amount">$$$$</h1>
+    </div>
+    <div id="containerTwo">
+        <div id="or" style="display: none;">
+            <img id="productImage" src="transparrent.png" class="responsive" title="">
+            <h1 id="orText"></h1>
+            <img id="percent" src="transparrent.png" class="responsive">
+        </div>
+
+        <div id="button" class="button">
+
+            <p id="historical"></p>
+
+            <button id="shuffle" onclick="shuffle()">დააკლიკე.</button>
+            <p id="shuffleSub">ეს შეიძლება ძალიან მოგეწონოს...</p>
+        </div>
+
+
+        <div>
+            <a href="https://bitnet.ge/" target="_blank">
+                <p id="donate">ინვესტირება 🙆‍♂️</p>
+            </a>
+        </div>
+    </div>
+</div>
+    <script>
+    
+    function sleep (time) {
+          return new Promise((resolve) => setTimeout(resolve, time));
+        }
+
+        function captureAndShare(n) {
+            
+            html2canvas(document.querySelector("#all"))
+                .then(function (canvas) {
+                    var dataURL = canvas.toDataURL();
+                    var request = new XMLHttpRequest();
+                    request.open("POST", "save-image.php");
+                    request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                    request.onload = function () {
+                        if (request.status === 200) {
+                            var imageUrl = request.responseText;
+                            document.querySelector("head").innerHTML += `
+            <meta property="og:image" content="${"https://bitnet.kerley.ge/"+imageUrl.slice(1,)}">`
+                            console.log("Image saved on the server. URL: " + imageUrl);
+                            if (n == 1){
+                                  sleep(600).then(() => {
+                               shareOnFacebook(imageUrl);
+                            });
+                                  
+                            }else{
+                                shareOnMessenger(imageUrl)
+                            }
+                                                
+                        } else {
+                            console.error("Failed to save the image on the server. Status: " + request.status);
+                        }
+                    };
+                    request.onerror = function () {
+                        console.error("Failed to send the image to the server.");
+                    };
+                    request.send("imageData=" + encodeURIComponent(dataURL));
+                })
+                .catch(function (error) {
+                    console.error("Failed to capture the element:", error);
+                });
+        }
+
+        
+         
+         function shareOnFacebook(imageUrl) {
+            imageUrl = imageUrl.slice(1,)
+            var shareUrl = `https://www.facebook.com/sharer/sharer.php?u=https://bitnet.kerley.ge/`+imageUrl            
+
+            window.open(shareUrl, "", "width=" + screen.availWidth + ",height=" + screen.availHeight);
+        }
+        function shareOnMessenger(imageUrl) {
+            imageUrl = imageUrl.slice(1,)
+            var shareUrl = `https://www.facebook.com/sharer/sharer.php?u=https://bitnet.kerley.ge/`+imageUrl            
+            window.open(`fb-messenger://share?link=https://bitnet.kerley.ge/`+ imageUrl + '&app_id=212415674695462' );
+            
+        }
+
+        
+    </script>
+
+
+    <script>
+        fetch('https://api.exchangerate-api.com/v4/latest/USD')
+        .then(response => response.json())
+        .then(data => {
+            const baseCurrency = 'USD';
+            const currencyValue = data.rates.GEL; // Get the value of GEL
+
+            // Do something with the GEL value
+            console.log(`${baseCurrency} to GEL: ${currencyValue}`);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+
+    </script>
+    
+</body>
+
+</html>

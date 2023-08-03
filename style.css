@@ -1,0 +1,89 @@
+
+
+body{
+    display: flex !important;
+    justify-content: center !important;
+}
+.batoni:active{
+  transform: scale(0.98);
+}
+.batoni{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    /* justify-content: center; */
+    width:fit-content;
+    height: fit-content;
+    padding:  10px 20px !important ;
+    float: left;
+    border-radius: 10px;
+
+  }
+  #all{
+    /* margin-top: -50px; */
+    width: 100% !important;
+  }
+  #all div:first-child{
+    width: 360px;
+    display: flex;
+    justify-content: space-between;
+
+  }
+  .batoni img{
+    width: 40px;
+    height: 40px;
+  }
+
+.textBody{
+  margin: 50px auto;
+  width: 360px;
+}
+
+h1{
+  display: inline;
+  line-height: 1.4;
+  font-size: 30px !important;
+ float: left !important;
+}
+
+
+.button {
+  display: block;
+  width: fit-content;
+  margin: 10px auto;
+  line-height: 1.5;
+}
+
+@media screen and (min-width: 600px){
+  .batoni:nth-child(2){
+    
+   
+    display: none !important;
+  }
+  .batoni:nth-child(1){
+  margin:auto ;
+	width:256px !important;
+    justify-content: center;
+  }
+}
+  @media screen and (max-width: 600px){
+
+  
+  .textBody {
+    margin: 20px auto !important;
+  }
+  div#or {
+      margin: 0 !important;
+  }
+  button#shuffle {
+    width: fit-content !important;
+    height: fit-content!important;
+    padding: 20px 40px !important;
+    margin-top: 10px !important;
+  }
+  .batoni img {
+    width: 20px !important;
+    height: 20px !important;
+  }
+}
+
